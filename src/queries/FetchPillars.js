@@ -1,11 +1,12 @@
 import gql from "graphql-tag"
 
 export default gql`
-  query FetchTeams {
-    allTeams {
+  {
+    allPillars {
       nodes {
-        name
         id
+        title
+        description
       }
     }
   }

@@ -1,8 +1,13 @@
 import React from "react"
-import { Rating, Header, Popup, Grid, Card } from "semantic-ui-react"
+import { Rating, Header, Popup, Grid, Card, Image } from "semantic-ui-react"
 import { graphql } from "react-apollo"
 import UpsertRating from "../../mutations/UpsertRating"
 import query from "../../queries/fetchUserWithTeammates"
+import symbol0 from "../../assets/skill_0.png"
+import symbol1 from "../../assets/skill_1.png"
+import symbol2 from "../../assets/skill_2.png"
+import symbol3 from "../../assets/skill_3.png"
+import symbol4 from "../../assets/skill_4.png"
 
 class DashRatings extends React.Component {
   hashRatings() {
@@ -62,21 +67,40 @@ class DashRatings extends React.Component {
     this.props.handleRate(skillid, rating)
   }
 
+  renderSymbol(average) {
+    switch (true) {
+      case average <= 1:
+        return <Image src={symbol0} size="mini" centered />
+        break
+      case average <= 2:
+        return <Image src={symbol1} size="mini" centered />
+        break
+      case average <= 3:
+        return <Image src={symbol2} size="mini" centered />
+        break
+      case average <= 4:
+        return <Image src={symbol3} size="mini" centered />
+        break
+      case average <= 5:
+        return <Image src={symbol4} size="mini" centered />
+        break
+      default:
+        return null
+    }
+  }
+
   renderRatings() {
-    // <Rating maxRating={5} onRate={this.handleRate} />
     const { skills, userRatings } = this.hashRatings()
-    console.log(this.props)
     const ratingHead =
       this.props.currentUser === this.props.userId
         ? "Self-Rating:"
         : "Your Rating:"
-    // console.log('dashRatings', this.state)
-    console.log(this.state)
     return Object.keys(skills).map(skill => {
       const { ratings, count, id } = skills[skill]
       const averageRating =
         ratings.reduce((acc, currVal) => acc + currVal) / count
       const userRate = userRatings[skill] ? userRatings[skill].rating : 0
+
       return (
         <Card key={id} color={this.randomColor()} fluid>
           <Card.Content>
@@ -85,7 +109,7 @@ class DashRatings extends React.Component {
               <Popup
                 flowing
                 hoverable
-                position="right center"
+                position="top center"
                 trigger={
                   <Rating
                     maxRating={5}
@@ -96,7 +120,10 @@ class DashRatings extends React.Component {
                 }
               >
                 <Grid centered divided columns={2}>
-                  <Grid.Column textAlign="center">
+                  <Grid.Column
+                    textAlign="center"
+                    style={{ paddingRight: "50px" }}
+                  >
                     <Header as="h4">{ratingHead}</Header>
                     <Rating
                       maxRating={5}
@@ -108,8 +135,8 @@ class DashRatings extends React.Component {
                     />
                   </Grid.Column>
                   <Grid.Column textAlign="center">
-                    <Header as="h4">Average-Rating:</Header>
-                    {averageRating.toFixed(2)}
+                    <Header as="h4">Rank:</Header>
+                    {this.renderSymbol(averageRating)}
                   </Grid.Column>
                 </Grid>
               </Popup>

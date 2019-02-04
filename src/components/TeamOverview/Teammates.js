@@ -1,6 +1,4 @@
 import React from "react"
-import { graphql } from "react-apollo"
-import { withRouter } from "react-router-dom"
 import {
   Card,
   Item,
@@ -12,19 +10,13 @@ import {
   Button,
   Message
 } from "semantic-ui-react"
-import { classNames } from "classnames"
-
-import "./DashTeam.css"
+import { withRouter } from "react-router-dom"
 import Avatar from "../Avatar"
 
-class DashTeam extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
+class Teammates extends React.Component {
   renderTeammates() {
-    const teammatesArray = this.props.teammates.peopleByTeamId.nodes
-    const userId = this.props.currentUser
+    const teammatesArray = this.props.teamInfo.peopleByTeamId.nodes
+    const userId = this.props.userId
 
     return teammatesArray.map(
       ({ id, firstName, lastName, position, userPictureUrl, email }) => {
@@ -33,6 +25,7 @@ class DashTeam extends React.Component {
           <Card
             raised
             key={id}
+            fluid
             style={{
               backgroundColor: selfNode ? "#E8EAF6" : "#fff"
             }}
@@ -92,30 +85,8 @@ class DashTeam extends React.Component {
   }
 
   render() {
-    if (!this.props.teammates) {
-      return (
-        <Header as="h3">
-          <Icon name="group" />
-          <Header.Content>No team yet</Header.Content>
-        </Header>
-      )
-    }
-    const { name, id } = this.props.teammates
-    return (
-      <div>
-        <Header as="h3" onClick={() => this.props.history.push(`/team/${id}`)}>
-          <Icon name="group" />
-          <Header.Content
-            style={{ color: "black" }}
-            as="a"
-          >
-            Team {name}
-          </Header.Content>
-        </Header>
-        <Card.Group>{this.renderTeammates()}</Card.Group>
-      </div>
-    )
+    return <div>{this.renderTeammates()}</div>
   }
 }
 
-export default withRouter(DashTeam)
+export default withRouter(Teammates)

@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 import {
   Image,
   Segment,
@@ -10,9 +10,12 @@ import {
   Label,
   Icon,
   Statistic
-} from "semantic-ui-react";
+} from "semantic-ui-react"
 
-import "./DashOverview.css";
+import "./DashOverview.css"
+import Avatar from "../Avatar"
+import Chart from "./PillarChart"
+import Pie from "./PillarPie"
 
 class DashOverviewHeader extends React.Component {
   // **TODO**
@@ -29,21 +32,20 @@ class DashOverviewHeader extends React.Component {
           </Label.Detail>
         </Label>
       </Item.Extra>
-    ) : null;
+    ) : null
   }
 
   renderSkillAverage() {
-    let totalSkill = 0;
-    let ratingsList = this.props.userInfo.ratingsByRatingFor.nodes;
+    let totalSkill = 0
+    let ratingsList = this.props.userInfo.ratingsByRatingFor.nodes
     for (let item of ratingsList) {
-      totalSkill += item.rating;
+      totalSkill += item.rating
     }
 
-    return (totalSkill / ratingsList.length).toFixed(2);
+    return (totalSkill / ratingsList.length).toFixed(2)
   }
 
   render() {
-    //  console.log(this.props.userInfo);
     const {
       id,
       firstName,
@@ -52,14 +54,16 @@ class DashOverviewHeader extends React.Component {
       position,
       ratingsByRatingFor,
       email
-    } = this.props.userInfo;
+    } = this.props.userInfo
 
     return (
       <Grid columns="2">
         <Grid.Column width="8">
           <Item.Group>
             <Item style={{ fontSize: "1.5em" }}>
-              <Item.Image src={userPictureUrl} size="small" rounded />
+              <Item.Image size="small" rounded>
+                <Avatar person={{ firstName, lastName, id, size: "5em" }} />
+              </Item.Image>
               <Item.Content>
                 <Item.Header>
                   {firstName} {lastName}
@@ -71,16 +75,11 @@ class DashOverviewHeader extends React.Component {
           </Item.Group>
         </Grid.Column>
         <Grid.Column width="8" verticalAlign="middle">
-          <Statistic.Group widths="1">
-            <Statistic size="large">
-              <Statistic.Value>{this.renderSkillAverage()}</Statistic.Value>
-              <Statistic.Label>Average Skill Rating</Statistic.Label>
-            </Statistic>
-          </Statistic.Group>
+          <Pie ratings={ratingsByRatingFor} />
         </Grid.Column>
       </Grid>
-    );
+    )
   }
 }
 
-export default DashOverviewHeader;
+export default DashOverviewHeader

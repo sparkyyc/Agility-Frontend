@@ -6,7 +6,12 @@ export default gql`
       nodes {
         id
         title: skillName
+        description
+        pillarId
+        pillarByPillarId {
+          title
+        }
       }
     }
   }
-`
+` 

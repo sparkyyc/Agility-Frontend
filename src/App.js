@@ -3,14 +3,15 @@ import { Route, Redirect, Switch } from "react-router-dom"
 import SideNav from "./components/SideNav"
 import Dashboard from "./components/Dashboard/Dashboard"
 import Skills from "./components/Skills/Skills"
+import TeamOverview from "./components/TeamOverview/TeamOverview"
+import TeamForm from "./components/Forms/TeamForm"
 import RequireAuth from "./components/Auth/RequireAuth"
 
 import "./App.css"
 
 const App = props => {
-  console.log(props)
   return (
-    <SideNav>
+    <SideNav currentUser={props.currentUser}>
       <Switch>
         <Route
           path="/dashboard/:id"
@@ -26,6 +27,16 @@ const App = props => {
       <Route
         path="/skills"
         render={prop => <Skills {...prop} currentUser={props.currentUser} />}
+      />
+      <Route
+        path="/team/:id"
+        render={prop => (
+          <TeamOverview {...prop} currentUser={props.currentUser} />
+        )}
+      />
+      <Route
+        path="/teamEdit/"
+        render={prop => <TeamForm {...prop} currentUser={props.currentUser} />}
       />
     </SideNav>
   )

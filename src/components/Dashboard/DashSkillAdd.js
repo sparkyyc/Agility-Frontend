@@ -40,7 +40,6 @@ class DashAddSkills extends React.Component {
   }
 
   handleSkillAdd = event => {
-    console.log(event.target)
     // if skill does not exist add to database
     const skillToRate = this.props.data.allSkills.nodes.find(
       skill => skill.title === this.state.skill
@@ -94,7 +93,6 @@ class DashAddSkills extends React.Component {
 
   createRatingEl = () => {
     const selfRatings = this.hashSelfRatings()
-    console.log("selfRatings", selfRatings)
     const { addedSkills } = this.state
 
     if (addedSkills.length > 0) {
