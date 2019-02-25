@@ -20,7 +20,7 @@ import {
 import logo from "../../assets/logo.png"
 import Pie from "./PieRatings"
 
-const URL = "http://localhost:3000/"
+// const URL = "http://localhost:3000/"
 
 const getWidth = () => {
   const isSSR = typeof window === "undefined"
